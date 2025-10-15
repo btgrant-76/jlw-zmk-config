@@ -6,6 +6,7 @@
 
 /*
   TODO
+   - [ ] try to set up #defines for bigger keycodes like BACK, FWD, etc.
    - [ ] test combos
    - [ ] leader key
    - [ ] encoder config
@@ -171,7 +172,7 @@
             &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V) &kp LS(LG(Z))      &kp LBKT   &kp N7      &kp N8      &kp N9      &kp RBKT
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
-            &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT &caps_word         &kp EQUAL  &kp N4      &kp N5      &kp N6      &kp SEMI
+            &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT &caps_word         &kp EQUAL  &kp N4     &kp N5     &kp N6      &kp SEMI
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │/*LEADER*/│          │          │          │      │          │          │          │          │          │
             &kp ESC    &none      &none      &none      &none             &kp BSLH     &kp N1      &kp N2      &kp N3     &kp GRAVE
@@ -186,16 +187,16 @@
             display-name = "Navigation";
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮      ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │          │          │          │          │      │          │          │          │          │          │
-            &none      &none      &none      &none      &none            &kp LS(LG(Z)) &kp LG(V) &kp LG(C) &kp LG(X)  &kp LG(Z)
+        //│          │          │          │          │/*../*/   │      │          │          │          │          │          │
+      &kp LS(LG(LBKT)) &kp LG(LBKT) &kp LG(RBKT) &kp LS(LG(LBKT)) &none &kp LS(LG(Z)) &kp LG(V) &kp LG(C) &kp LG(X)  &kp LG(Z)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
-            &none      &none      &none      &none      &none              &none      &none      &none      &none      &none
+            &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT  &none              &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp SEMI
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
-            &none      &none      &none      &none      &none              &none      &none      &none      &none      &none
+            &none      &none      &none      &none      &none              &kp HOME  &kp PG_DN  &kp PG_UP  &kp END  &kp KP_ENTER
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &trans    &trans  &trans     &trans
+                                             &none      &none     &trans  &none      &none
         //                                 ╰──────────┴──────────╯      ╰──────────┴──────────╯
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
