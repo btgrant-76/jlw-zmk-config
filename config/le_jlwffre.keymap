@@ -7,10 +7,11 @@
 /*
   TODO
    - [ ] try to set up #defines for bigger keycodes like BACK, FWD, etc.
-   - [ ] test combos
-   - [ ] leader key
-   - [ ] encoder config
-   - [ ] key overrides
+   - [ ] test all combos
+   - [ ] test all macros
+   - [ ] config encoder
+   - [ ] implement leader key
+   - [ ] implement key overrides
    - [ ] format everything nicely
  */
 
@@ -269,6 +270,7 @@
 
         mse { // 5 // TODO
             display-name = "Mouse Keys";
+            // TODO read this first:  https://zmk.dev/docs/keymaps/behaviors/mouse-emulation
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮      ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │          │          │          │          │      │          │          │          │          │          │
@@ -278,9 +280,9 @@
             &none      &none      &none      &none      &none              &none      &none      &none      &none      &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
-            &none      &none      &none      &none      &none             &none      &none      &none      &none      &none
+            &kp ESC    &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT             &none      &none      &none      &none      &none
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &trans    &trans  &trans     &trans
+                                             &none      &none     &trans  &none      &none
         //                                 ╰──────────┴──────────╯      ╰──────────┴──────────╯
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
