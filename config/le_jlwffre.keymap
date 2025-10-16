@@ -58,6 +58,23 @@
             flavor = "tap-preferred";
         };
 
+        /* mod-morphs begin */
+        cma_lprn: comma_left_paren {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA >, <&kp LPAR>;
+            // &kp &kp DOT
+            mods = <(MOD_LCTL)>;
+        };
+        dot_rprn: dot_right_paren {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp DOT >, <&kp RPAR>;
+            // &kp &kp DOT
+            mods = <(MOD_LCTL)>;
+        };
+        /* mod-morphs end */
+
         combos {
             compatible = "zmk,combos";
             combo_fun_layer { // TODO test this
@@ -193,7 +210,7 @@
             HRML(A,     S,         D,         F)        &kp G                             &kp H      HRMR(J,     K,         L,        SQT)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤                      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Z       │  X       │  C       │  D       │  V       │                      │  K       │  H       │ , <      │ . >      │ / ?      │
-        &ht LC(LA(LG(LSHFT))) Z  &kp X &kp C &kp V &ht LC(LA(LSHFT)) B                  &ht LC(LA(LSHFT)) N &kp M &kp COMMA &kp DOT &ht LC(LA(LG(LSHFT))) FSLH
+        &ht LC(LA(LG(LSHFT))) Z  &kp X &kp C &kp V &ht LC(LA(LSHFT)) B                  &ht LC(LA(LSHFT)) N &kp M &cma_lprn &dot_rprn &ht LC(LA(LG(LSHFT))) FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤                      ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &lt 5 TAB  &lt 2 BSPC        &kp C_MUTE      &lt 3 SPACE &lt 5 DEL
         //                                 ╰──────────┴──────────╯                      ╰──────────┴──────────╯
