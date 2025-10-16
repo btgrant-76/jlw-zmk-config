@@ -80,7 +80,10 @@
             #binding-cells = <0>;
             vim_write_quit { sequence = <W Q>; bindings = <&kp ESC &kp COLON &kp W &kp Q &kp ENTER>; };
             vim_write { sequence = <W W>; bindings = <&kp ESC &kp COLON &kp W &kp ENTER>; };
+            updir { sequence = <U D>; bindings = <&up_dir>; };
         };
+
+
 
         combos {
             compatible = "zmk,combos";
