@@ -7,7 +7,7 @@
 /*
   TODO
    - [ ] try to set up #defines for bigger keycodes like BACK, FWD, etc.
-   - [ ] test all combos
+   - [x] test all combos
    - [ ] test all macros
    - [ ] config encoder https://zmk.dev/docs/features/encoders
    - [ ] implement leader key https://github.com/urob/zmk-leader-key
@@ -20,8 +20,8 @@
 #include <dt-bindings/zmk/bt.h>
 
 // Home row mods macro
-#define HRML(k1,k2,k3,k4) &ht LCTRL k1  &ht LALT k2  &ht LGUI k3  &ht LSHFT k4
-#define HRMR(k1,k2,k3,k4) &ht RSHFT k1  &ht RGUI k2  &ht LALT k3  &ht RCTRL k4
+#define HRML(k1,k2,k3,k4) &ht LCTRL k1  &ht LALT k2  &ht LGUI k3  &st LSHFT k4
+#define HRMR(k1,k2,k3,k4) &st RSHFT k1  &ht RGUI k2  &ht LALT k3  &ht RCTRL k4
 
 / {
     behaviors {
@@ -33,6 +33,15 @@
             quick-tap-ms = <220>;
             require-prior-idle-ms = <125>;
             bindings = <&kp>, <&kp>;
+        };
+        st: shift_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <105>;
+            // quick-tap-ms = <220>;
+            // require-prior-idle-ms = <125>;
+            bindings = <&shifted>, <&kp>;
         };
         mt: mod_tap {
             #binding-cells = <2>;
@@ -184,9 +193,7 @@
             HRML(A,     S,         D,         F)        &kp G                             &kp H      HRMR(J,     K,         L,        SQT)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤                      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Z       │  X       │  C       │  D       │  V       │                      │  K       │  H       │ , <      │ . >      │ / ?      │
-        //  MOD_HYPR	Hyper (Left Control, Shift, Alt and GUI)
-        //  MOD_MEH	Meh (Left Control, Shift, and Alt)
-        &ht LC(LA(LG(LSHFT))) Z  &kp X &kp C &kp V &ht LC(LA(LSHFT)) B                  &ht LC(LA(LSHFT)) N &kp M &kp COMMA &kp DOT &ht LC(LA(LG(LSHFT))) FSLH // FIXME Hyper & Meh hold-taps
+        &ht LC(LA(LG(LSHFT))) Z  &kp X &kp C &kp V &ht LC(LA(LSHFT)) B                  &ht LC(LA(LSHFT)) N &kp M &kp COMMA &kp DOT &ht LC(LA(LG(LSHFT))) FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤                      ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &lt 5 TAB  &lt 2 BSPC        &kp C_MUTE      &lt 3 SPACE &lt 5 DEL
         //                                 ╰──────────┴──────────╯                      ╰──────────┴──────────╯
@@ -295,7 +302,7 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮      ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │          │          │          │          │      │          │          │          │          │          │
-            &bt BT_CLR  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &none      &kp LS(LG(Z)) &kp LG(V) &kp LG(C) &kp LG(X)  &kp LG(Z)
+          &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &none        &kp LS(LG(Z)) &kp LG(V) &kp LG(C) &kp LG(X)  &kp LG(Z)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
             &none      &none      &none      &none      &none              &none      &none      &none      &none      &none
