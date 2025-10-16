@@ -75,15 +75,22 @@
         // TODO num pad overrides
         /* mod-morphs end */
 
+        leader: leader {
+            compatible = "zmk,behavior-leader-key";
+            #binding-cells = <0>;
+            vim_write_quit { sequence = <W Q>; bindings = <&kp ESC &kp COLON &kp W &kp Q &kp ENTER>; };
+            vim_write { sequence = <W W>; bindings = <&kp ESC &kp COLON &kp W &kp ENTER>; };
+        };
+
         combos {
             compatible = "zmk,combos";
-            combo_fun_layer { // TODO test this
+            combo_fun_layer {
                 timeout-ms = <50>;
                 key-positions = <30 31>;
                 bindings = <&mo 4>;
                 layers = <0>;
             };
-            combo_sym_layer { // TODO test this
+            combo_sym_layer {
                 timeout-ms = <50>;
                 key-positions = <33 34>;
                 bindings = <&mo 1>;
@@ -247,8 +254,8 @@
         //│          │          │          │          │          │      │          │          │          │          │          │
             &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT &caps_word         &kp EQUAL  &kp N4     &kp N5     &kp N6      &kp SEMI
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │/*LEADER*/│          │          │          │      │          │          │          │          │          │
-            &kp ESC    &none      &none      &none      &none             &kp BSLH     &kp N1      &kp N2      &kp N3     &kp GRAVE
+        //│          │          │          │          │          │      │          │          │          │          │          │
+            &kp ESC    &none      &leader      &none      &none             &kp BSLH     &kp N1      &kp N2      &kp N3     &kp GRAVE
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &kp BSPC    &trans   &trans  &kp MINUS   &kp N0
         //                                 ╰──────────┴──────────╯      ╰──────────┴──────────╯
