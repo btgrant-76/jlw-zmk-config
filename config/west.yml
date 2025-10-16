@@ -1,14 +1,20 @@
 manifest:
+  # FIXME pick a tag/revision to pin to below in the revision fields
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
     - name: jlw # You can name this whatever you like; just make sure the "remote" below matches.
       url-base: https://github.com/josh-l-wang
+    - name: urob
+      url-base: https://github.com/urob
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+    - name: zmk-leader-key
+      remote: urob
+      revision: main # v0.3 # set to same as ZMK version above
     # Add the name of the repository as a project.
     - name: zmk-config-jlw
       remote: jlw
