@@ -184,7 +184,9 @@
             HRML(A,     S,         D,         F)        &kp G                             &kp H      HRMR(J,     K,         L,        SQT)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤                      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Z       │  X       │  C       │  D       │  V       │                      │  K       │  H       │ , <      │ . >      │ / ?      │
-            &kp Z      &kp X      &kp C      &kp V      &kp B                             &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
+        //  MOD_HYPR	Hyper (Left Control, Shift, Alt and GUI)
+        //  MOD_MEH	Meh (Left Control, Shift, and Alt)
+        &ht LC(LA(LG(LSHFT))) Z  &kp X &kp C &kp V &ht LC(LA(LSHFT)) B                  &ht LC(LA(LSHFT)) N &kp M &kp COMMA &kp DOT &ht LC(LA(LG(LSHFT))) FSLH // FIXME Hyper & Meh hold-taps
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤                      ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &lt 5 TAB  &lt 2 BSPC        &kp C_MUTE      &lt 3 SPACE &lt 5 DEL
         //                                 ╰──────────┴──────────╯                      ╰──────────┴──────────╯
@@ -224,7 +226,7 @@
         //│          │/*LEADER*/│          │          │          │      │          │          │          │          │          │
             &kp ESC    &none      &none      &none      &none             &kp BSLH     &kp N1      &kp N2      &kp N3     &kp GRAVE
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &kp BSPC    &trans           &kp MINUS     &kp N0
+                                             &kp BSPC    &trans   &trans  &kp MINUS   &kp N0
         //                                 ╰──────────┴──────────╯      ╰──────────┴──────────╯
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -235,7 +237,7 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮      ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │          │          │          │          │      │          │          │          │          │          │
-      &kp LS(LG(LBKT)) &kp LG(LBKT) &kp LG(RBKT) &kp LS(LG(LBKT)) &up_dir &kp LS(LG(Z)) &kp LG(V) &kp LG(C) &kp LG(X)  &kp LG(Z)
+      &kp LS(LG(LBKT)) &kp LG(LBKT) &kp LG(RBKT) &kp LS(LG(RBKT)) &up_dir &kp LS(LG(Z)) &kp LG(V) &kp LG(C) &kp LG(X)  &kp LG(Z)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
             &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT  &none              &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp SEMI
