@@ -23,6 +23,7 @@
 #define HRML(k1,k2,k3,k4) &ht LCTRL k1  &ht LALT k2  &ht LGUI k3  &st LSHFT k4
 #define HRMR(k1,k2,k3,k4) &st RSHFT k1  &ht RGUI k2  &ht LALT k3  &ht RCTRL k4
 
+
 / {
     behaviors {
         ht: hold_tap {
@@ -78,9 +79,12 @@
         leader: leader {
             compatible = "zmk,behavior-leader-key";
             #binding-cells = <0>;
-            vim_write_quit { sequence = <W Q>; bindings = <&kp ESC &kp COLON &kp W &kp Q &kp ENTER>; };
-            vim_write { sequence = <W W>; bindings = <&kp ESC &kp COLON &kp W &kp ENTER>; };
-            updir { sequence = <U D>; bindings = <&up_dir>; };
+            // TODO I could also try replacing all of the &kp items with the raw values
+            vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
+            vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
+            curly_brace_ins_ls { sequence = <C I>; bindings = <&c_brace_ins>; };
+            parens_ins_ls {      sequence = <P I>; bindings = <&paren_ins>; };
+            updir {              sequence = <U D>; bindings = <&up_dir>; };
         };
 
 
@@ -126,14 +130,42 @@
         };
     };
 
+    // TODO read up on the different fields/options
     macros { // TODO can the presses in macro_press and _release be consolidated in a single item?
-
         up_dir: up_dir {
             #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
             wait-ms = <40>;
             tap-ms = <40>;
             bindings = <&kp DOT &kp DOT &kp FSLH>;
+        };
+        vim_w: vim_write {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp ESC &kp COLON &kp W &kp ENTER>;
+        };
+        vim_wq: vim_write_and_quit {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp ESC &kp COLON &kp W &kp Q &kp ENTER>;
+        };
+        c_brace_ins: curly_braces_insert {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LBRC &kp RBRC &kp LEFT>; // TODO work up a parameterized version
+        };
+        paren_ins: parens_insert {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LPAR &kp RPAR &kp LEFT>;
         };
         log_out: log_out {
             #binding-cells = <0>;
