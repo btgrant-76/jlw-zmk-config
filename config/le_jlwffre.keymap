@@ -83,11 +83,15 @@
             vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
             // TODO ask on the ZMK server about this issue where a single char can't be used if it's the first character in another sequence
             vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
-            curly_brace_ins_ls { sequence = <C I>; bindings = <&c_brace_ins>; };
-            parens_ins_ls {      sequence = <P I>; bindings = <&paren_ins>; };
-            updir {              sequence = <U D>; bindings = <&up_dir>; };
+//            curly_brace_ins_ls { sequence = <C I>; bindings = <&c_brace_ins>; };
+//            parens_ins_ls {      sequence = <P I>; bindings = <&paren_ins>; };
+            curly_brace_ins_ls { sequence = <C I>; bindings = <&pair_insert LBRC RBRC>; };
+            parens_ins_ls {      sequence = <P I>; bindings = <&pair_insert LPAR RPAR>; };
             bracket_ins_ls { sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
+            updir {              sequence = <U D>; bindings = <&up_dir>; };
         };
+
+
 
         combos {
             compatible = "zmk,combos";
@@ -212,13 +216,17 @@
                 <&macro_release &kp LGUI>,
                 <&macro_release &kp LSHFT>;
         };
+
         pair_insert: pair_insert {
             compatible = "zmk,behavior-macro-two-param";
             #binding-cells = <2>;
             wait-ms = <40>;
             tap-ms = <40>;
-            bindings = <&macro_param_1to1 &macro_param_2to2>,
-                       <&kp MACRO_PLACEHOLDER &kp MACRO_PLACEHOLDER &kp LEFT>;
+            bindings = <&macro_param_1to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&macro_param_2to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&kp LEFT>; // FIXME this barley works at all...
         };
         shifted: macro_shifted_kp {
             #binding-cells = <1>;
