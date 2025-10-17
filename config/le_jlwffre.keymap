@@ -41,7 +41,7 @@
             flavor = "balanced";
             tapping-term-ms = <105>;
             quick-tap-ms = <220>;
-            require-prior-idle-ms = <125>;
+            require-prior-idle-ms = <125>; // TODO try removing this or lowering it
             bindings = <&kp>, <&kp>;
         };
         mt: mod_tap {
@@ -81,13 +81,13 @@
             #binding-cells = <0>;
             // TODO I could also try replacing all of the &kp items with the raw values
             vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
+            // TODO ask on the ZMK server about this issue where a single char can't be used if it's the first character in another sequence
             vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
             curly_brace_ins_ls { sequence = <C I>; bindings = <&c_brace_ins>; };
             parens_ins_ls {      sequence = <P I>; bindings = <&paren_ins>; };
             updir {              sequence = <U D>; bindings = <&up_dir>; };
+            bracket_ins_ls { sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
         };
-
-
 
         combos {
             compatible = "zmk,combos";
@@ -167,6 +167,13 @@
             tap-ms = <40>;
             bindings = <&kp LPAR &kp RPAR &kp LEFT>;
         };
+//        bracket_ins: bracket_insert {
+//            compatible = "zmk,behavior-macro";
+//            #binding-cells = <0>;
+//            wait-ms = <40>;
+//            tap-ms = <40>;
+//            bindings = <&kp LBKT &kp LBKT &kp LEFT>; // TODO work up a parameterized version
+//        };
         log_out: log_out {
             #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
@@ -204,6 +211,14 @@
                 <&macro_tap     &kp N4>,
                 <&macro_release &kp LGUI>,
                 <&macro_release &kp LSHFT>;
+        };
+        pair_insert: pair_insert {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&macro_param_1to1 &macro_param_2to2>,
+                       <&kp MACRO_PLACEHOLDER &kp MACRO_PLACEHOLDER &kp LEFT>;
         };
         shifted: macro_shifted_kp {
             #binding-cells = <1>;
