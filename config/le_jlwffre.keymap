@@ -13,6 +13,9 @@
    - [ ] implement leader key https://github.com/urob/zmk-leader-key
    - [ ] implement mod morphs (key overrides) https://zmk.dev/docs/keymaps/behaviors/mod-morph
    - [ ] format everything nicely https://zmk.dev/docs/development/contributing/documentation#formatting-and-linting-your-changes
+   - troubleshooting
+     - [ ] is there a wait time before a layer hold can effect the hold?
+     - [ ] for tap-holds like HRM, I can double-tap-and-hold to get the tap action to repeat, but that doesn't work with layer holds
  */
 
 #include <behaviors.dtsi>
@@ -81,17 +84,16 @@
             #binding-cells = <0>;
             // TODO I could also try replacing all of the &kp items with the raw values
             vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
-            // TODO ask on the ZMK server about this issue where a single char can't be used if it's the first character in another sequence
             vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
-//            curly_brace_ins_ls { sequence = <C I>; bindings = <&c_brace_ins>; };
-//            parens_ins_ls {      sequence = <P I>; bindings = <&paren_ins>; };
+            bracket_ins_ls {     sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
             curly_brace_ins_ls { sequence = <C I>; bindings = <&pair_insert LBRC RBRC>; };
+            dquote_ins_ls {      sequence = <P I>; bindings = <&pair_insert DQT DQT>; };
+            grave_ins_ls {       sequence = <P I>; bindings = <&pair_insert GRAVE GRAVE>; };
             parens_ins_ls {      sequence = <P I>; bindings = <&pair_insert LPAR RPAR>; };
-            bracket_ins_ls { sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
+            quote_ins_ls {       sequence = <P I>; bindings = <&pair_insert SQT SQT>; };
             updir {              sequence = <U D>; bindings = <&up_dir>; };
+            // TODO build a macro for inserting and ending with semicolon
         };
-
-
 
         combos {
             compatible = "zmk,combos";
@@ -226,7 +228,27 @@
                        <&kp MACRO_PLACEHOLDER>,
                        <&macro_param_2to1>,
                        <&kp MACRO_PLACEHOLDER>,
-                       <&kp LEFT>; // FIXME this barley works at all...
+                       <&kp LEFT>;
+        };
+        pair: pair {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&macro_param_1to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&macro_param_2to1>,
+                       <&kp MACRO_PLACEHOLDER>;
+        };
+        pair_w_semi: pair_w_semi {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&macro_param_1to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&macro_param_2to1>,
+                       <&kp MACRO_PLACEHOLDER>;
         };
         shifted: macro_shifted_kp {
             #binding-cells = <1>;
