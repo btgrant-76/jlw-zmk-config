@@ -5,18 +5,17 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: jlw # You can name this whatever you like; just make sure the "remote" below matches.
       url-base: https://github.com/josh-l-wang
-    - name: urob
-      url-base: https://github.com/urob
+#    - name: urob
+#      url-base: https://github.com/urob
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: v0.3.0
       import: app/west.yml
-    - name: zmk-leader-key
-      remote: urob
-      revision: v0.3.0 # v0.3 # set to same as ZMK version above
-    # Add the name of the repository as a project.
-    - name: zmk-config-jlw # TODO do we need this in the repo list?
+#    - name: zmk-leader-key
+#      remote: urob
+#      revision: v0.3.0
+    - name: zmk-config-jlw
       remote: jlw
       revision: main # This is the name of the branch you want to use.
   self:

@@ -79,21 +79,21 @@
         // TODO num pad overrides
         /* mod-morphs end */
 
-        leader: leader {
-            compatible = "zmk,behavior-leader-key";
-            #binding-cells = <0>;
-            // TODO I could also try replacing all of the &kp items with the raw values
-            vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
-            vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
-            bracket_ins_ls {     sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
-            curly_brace_ins_ls { sequence = <C I>; bindings = <&pair_insert LBRC RBRC>; };
-            dquote_ins_ls {      sequence = <P I>; bindings = <&pair_insert DQT DQT>; };
-            grave_ins_ls {       sequence = <P I>; bindings = <&pair_insert GRAVE GRAVE>; };
-            parens_ins_ls {      sequence = <P I>; bindings = <&pair_insert LPAR RPAR>; };
-            quote_ins_ls {       sequence = <P I>; bindings = <&pair_insert SQT SQT>; };
-            updir {              sequence = <U D>; bindings = <&up_dir>; };
-            // TODO build a macro for inserting and ending with semicolon
-        };
+//        leader: leader {
+//            compatible = "zmk,behavior-leader-key";
+//            #binding-cells = <0>;
+//            // TODO I could also try replacing all of the &kp items with the raw values
+//            vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
+//            vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
+//            bracket_ins_ls {     sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
+//            curly_brace_ins_ls { sequence = <C I>; bindings = <&pair_insert LBRC RBRC>; };
+//            dquote_ins_ls {      sequence = <P I>; bindings = <&pair_insert DQT DQT>; };
+//            grave_ins_ls {       sequence = <P I>; bindings = <&pair_insert GRAVE GRAVE>; };
+//            parens_ins_ls {      sequence = <P I>; bindings = <&pair_insert LPAR RPAR>; };
+//            quote_ins_ls {       sequence = <P I>; bindings = <&pair_insert SQT SQT>; };
+//            updir {              sequence = <U D>; bindings = <&up_dir>; };
+//            // TODO build a macro for inserting and ending with semicolon
+//        };
 
         combos {
             compatible = "zmk,combos";
@@ -335,7 +335,7 @@
             &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT &caps_word         &kp EQUAL  &kp N4     &kp N5     &kp N6      &kp SEMI
         //├──────────┼──────────┼──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │      │          │          │          │          │          │
-            &kp ESC    &none      &leader      &none      &none             &kp BSLH     &kp N1      &kp N2      &kp N3     &kp GRAVE
+            &kp ESC    &none      &none /*&leader*/      &none      &none             &kp BSLH     &kp N1      &kp N2      &kp N3     &kp GRAVE
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤      ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &kp BSPC    &trans   &trans  &kp MINUS   &kp N0
         //                                 ╰──────────┴──────────╯      ╰──────────┴──────────╯
