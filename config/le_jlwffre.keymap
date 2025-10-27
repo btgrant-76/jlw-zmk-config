@@ -82,21 +82,47 @@
         leader: leader {
             compatible = "zmk,behavior-leader-key";
             #binding-cells = <0>;
-            // TODO I could also try replacing all of the &kp items with the raw values
-            vim_write_quit_ls {  sequence = <W Q>; bindings = <&vim_wq>; };
-            vim_write_ls {       sequence = <W W>; bindings = <&vim_w>; };
 
-            bracket_ins_ls {     sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
-            curly_brace_ins_ls { sequence = <C I>; bindings = <&pair_insert LBRC RBRC>; };
+            // vim
+            vim_write_ls       { sequence = <V W>; bindings = <&vim_w>; };
+            vim_write_quit_ls  { sequence = <V Q>; bindings = <&vim_wq>; };
 
-            quote_ins_ls {       sequence = <Q I>; bindings = <&pair_insert SQT SQT>; };
-            dquote_ins_ls {      sequence = <D Q I>; bindings = <&pair_insert DQT DQT>; }; // TODO sync this up with QMK
+            // parens
+            parens_ls               { sequence = <P A>; bindings = <&pair LPAR RPAR>; };
+            parens_ins_ls           { sequence = <P I>; bindings = <&pair_insert LPAR RPAR>; };
+            parens_semi_ls          { sequence = <P S A>; bindings = <&pair_w_semi LPAR RPAR>; };
+            parens_semi_ins_ls      { sequence = <P S I>; bindings = <&pair_insert_w_semi LPAR RPAR>; };
 
-            grave_ins_ls {       sequence = <G I>; bindings = <&pair_insert GRAVE GRAVE>; };
-            parens_ins_ls {      sequence = <P I>; bindings = <&pair_insert LPAR RPAR>; };
+            // brackets
+            bracket_ls              { sequence = <B A>; bindings = <&pair LBKT RBKT>; };
+            bracket_ins_ls          { sequence = <B I>; bindings = <&pair_insert LBKT RBKT>; };
+            bracket_semi_ls         { sequence = <B S A>; bindings = <&pair_w_semi LBKT RBKT>; };
+            bracket_semi_ins_ls     { sequence = <B S I>; bindings = <&pair_insert_w_semi LBKT RBKT>; };
 
-            updir {              sequence = <U D>; bindings = <&up_dir>; };
-            // TODO build a macro for inserting and ending with semicolon
+            // curly braces
+            curly_brace_ls          { sequence = <C A>; bindings = <&pair LBRC RBRC>; };
+            curly_brace_ins_ls      { sequence = <C I>; bindings = <&pair_insert LBRC RBRC>; };
+            curly_brace_semi_ls     { sequence = <C S A>; bindings = <&pair_w_semi LBRC RBRC>; };
+            curly_brace_semi_ins_ls { sequence = <C S I>; bindings = <&pair_insert_w_semi LBRC RBRC>; };
+
+            // back-tick/grave
+            grave_ins_ls            { sequence = <G I>; bindings = <&pair_insert GRAVE GRAVE>; };
+            code_fence_ls           { sequence = <C F>; bindings = <&code_fence>; };
+
+            // quotes
+            quote_ins_ls            { sequence = <Q I>;   bindings = <&pair_insert SQT SQT>; };
+            dquote_ins_ls           { sequence = <D Q I>; bindings = <&pair_insert DQT DQT>; };
+
+            // HTML tags
+            tag_open_in_ls          { sequence = <T O>; bindings = <&tag_open_insert>; };
+            tag_close_in_ls         { sequence = <T C>; bindings = <&tag_close_insert>; };
+            tag_void_in_ls          { sequence = <T V>; bindings = <&tag_void_insert>; };
+
+            // others
+            updir_ls                { sequence = <U D>; bindings = <&up_dir>; };
+            js_log_ls               { sequence = <L O G>; bindings = <&js_log>; };
+            js_af_ls                { sequence = <A F>; bindings = <&js_arr_fun>; };
+            caps_lock_ls            { sequence = <C L>; bindings = <&kp CAPS>; };// FIXME doesn't work
         };
 
         combos {
@@ -140,14 +166,28 @@
         };
     };
 
-    // TODO read up on the different fields/options
-    macros { // TODO can the presses in macro_press and _release be consolidated in a single item?
+
+
+    /* TODO read up on the different fields/options
+        - wait-ms
+        - tap-ms
+        - what other configuration options are available
+     */
+    // TODO can the presses in macro_press and _release be consolidated in a single item?
+    macros {
         up_dir: up_dir {
             #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
             wait-ms = <40>;
             tap-ms = <40>;
             bindings = <&kp DOT &kp DOT &kp FSLH>;
+        };
+        code_fence: code_fence {
+            #binding-cells = <0>;
+            compatible = "zmk,behavior-macro";
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp GRAVE &kp GRAVE &kp GRAVE &kp RETURN &kp RETURN &kp GRAVE &kp GRAVE &kp GRAVE &kp UP &kp UP>;
         };
         vim_w: vim_write {
             compatible = "zmk,behavior-macro";
@@ -177,13 +217,6 @@
             tap-ms = <40>;
             bindings = <&kp LPAR &kp RPAR &kp LEFT>;
         };
-//        bracket_ins: bracket_insert {
-//            compatible = "zmk,behavior-macro";
-//            #binding-cells = <0>;
-//            wait-ms = <40>;
-//            tap-ms = <40>;
-//            bindings = <&kp LBKT &kp LBKT &kp LEFT>; // TODO work up a parameterized version
-//        };
         log_out: log_out {
             #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
@@ -223,6 +256,16 @@
                 <&macro_release &kp LSHFT>;
         };
 
+        pair: pair {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&macro_param_1to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&macro_param_2to1>,
+                       <&kp MACRO_PLACEHOLDER>;
+        };
         pair_insert: pair_insert {
             compatible = "zmk,behavior-macro-two-param";
             #binding-cells = <2>;
@@ -234,16 +277,6 @@
                        <&kp MACRO_PLACEHOLDER>,
                        <&kp LEFT>;
         };
-        pair: pair {
-            compatible = "zmk,behavior-macro-two-param";
-            #binding-cells = <2>;
-            wait-ms = <40>;
-            tap-ms = <40>;
-            bindings = <&macro_param_1to1>,
-                       <&kp MACRO_PLACEHOLDER>,
-                       <&macro_param_2to1>,
-                       <&kp MACRO_PLACEHOLDER>;
-        };
         pair_w_semi: pair_w_semi {
             compatible = "zmk,behavior-macro-two-param";
             #binding-cells = <2>;
@@ -252,7 +285,60 @@
             bindings = <&macro_param_1to1>,
                        <&kp MACRO_PLACEHOLDER>,
                        <&macro_param_2to1>,
-                       <&kp MACRO_PLACEHOLDER>;
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&kp SEMI>;
+        };
+        pair_insert_w_semi: pair_insert_w_semi {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&macro_param_1to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&macro_param_2to1>,
+                       <&kp MACRO_PLACEHOLDER>,
+                       <&kp SEMI>,
+                       <&kp LEFT>,
+                       <&kp LEFT>;
+        };
+        js_log: javascript_console_log {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+//            wait-ms = <40>; // TODO how does this change the output?
+            tap-ms = <40>;
+            bindings = < &kp C &kp O &kp N &kp S &kp O &kp L &kp E &kp DOT
+                         &kp L &kp O &kp G &kp LPAR &kp SQT &kp SQT &kp RPAR &kp SEMI
+                         &kp LEFT &kp LEFT &kp LEFT>;
+                         console.log('');
+        };
+        js_arr_fun: javascript_arrow_function {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp EQUAL &kp GT &kp SPC &kp LBRC  &kp RBRC
+                        &kp LEFT &kp LEFT>;
+        };
+        tag_open_insert:  html_tag_open_insert {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LT &kp GT &kp LEFT>;
+        };
+        tag_close_insert: html_tag_close_insert {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LT &kp FSLH &kp GT &kp LEFT>;
+        };
+        tag_void_insert: html_tag_void_insert {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LT &kp SPACE &kp FSLH &kp GT &kp LEFT &kp LEFT &kp LEFT>;
         };
         shifted: macro_shifted_kp {
             #binding-cells = <1>;
@@ -261,7 +347,7 @@
               <&macro_press &kp LSHFT>,
               <&macro_param_1to1 &macro_tap &kp MACRO_PLACEHOLDER>,
               <&macro_release &kp LSHFT>;
-        };
+        }; // TODO probably remove this
         as: autoshift {
             compatible = "zmk,behavior-macro-one-param";
             #binding-cells = <1>;
@@ -275,7 +361,7 @@
               <&macro_param_1to1>,
               <&macro_param_1to2>,
               <&as_ht MACRO_PLACEHOLDER MACRO_PLACEHOLDER>;
-        };
+        }; // TODO probably remove this
     };
 
     keymap {
